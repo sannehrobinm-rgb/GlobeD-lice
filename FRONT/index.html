@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gourmandises</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- HEADER -->
+  <header>
+    <h1>Petite liste de pâtisseries</h1>
+    <div class="container-citation">
+      <h2>"Le seul moyen de se délivrer d'une tentation, c'est d'y céder."</h2>
+    </div>
+  </header>
+
+  <!-- BARRE DE RECHERCHE -->
+  <div class="search-container">
+    <input type="text" id="search" placeholder="Rechercher une pâtisserie...">
+    <select id="categorie" required>
+      <option value="patisseries-française">Pâtisseries françaises</option>
+      <option value="patisseries_europeennes">Pâtisseries européennes</option>
+      <option value="patisseries_americaines">Pâtisseries américaines</option>
+    </select>
+  </div>
+
+  <!-- SLIDER D'IMAGES AUTOMATIQUE -->
+  <div id="slider"></div>
+
+  <!-- CONTENEUR PRINCIPAL -->
+  <div class="main-container">
+    <div id="cards-container"></div>
+    <div id="search-results"></div>
+  </div>
+
+  <!-- SCRIPT JS -->
+  <script src="script.js"></script>
+</body>
+</html>
