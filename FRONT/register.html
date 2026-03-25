@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Inscription - Gourmandise</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="auth-container">
+    <h1>Inscription</h1>
+    <form id="registerForm">
+      <input type="email" id="email" placeholder="Email" required />
+      <input type="password" id="password" placeholder="Mot de passe" required />
+      <input type="password" id="confirm" placeholder="Confirmer le mot de passe" required />
+      <button type="submit">S'inscrire</button>
+    </form>
+    <p id="message"></p>
+    <p>Déjà un compte ? <a href="login.html">Se connecter</a></p>
+  </div>
+
+  <script>
+    // Si déjà connecté → pas besoin d'être ici
+    if (localStorage.getItem('token')) {
+      window.location.href = 'index.html';
+    }
+
+    const API = "http://localhost:4242";
+
+    document.getElementById("registerForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      const confirm = document.getElementById("confirm").value;
+      const msg = document.getElementById("message");
+
+      if (password !== confirm) {
+        msg.style.color = "red";
+        msg.textContent = "Les mots de passe ne correspondent pas";
+        return;
+      }
+
+      const res = await fetch(`${API}/auth/register`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        msg.style.color = "green";
+        msg.textContent = "Inscription réussie ! Vérifiez votre email 📧";
+      } else {
+        msg.style.color = "red";
+        msg.textContent = data.message;
+      }
+    });
+  </script>
+</body>
+</html>

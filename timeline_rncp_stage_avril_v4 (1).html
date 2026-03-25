@@ -1,0 +1,191 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.wrap{padding:1.5rem 0}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--color-text-secondary);margin-bottom:14px}
+.leg{display:flex;align-items:center;gap:5px}
+.dot{width:10px;height:10px;border-radius:50%}
+.phases{display:grid;grid-template-columns:1fr;gap:1px}
+.week{display:grid;grid-template-columns:80px 1fr;gap:0;border-bottom:0.5px solid var(--color-border-tertiary)}
+.week:last-child{border-bottom:none}
+.week-label{padding:10px 12px 10px 0;font-size:11px;color:var(--color-text-tertiary);text-align:right;position:relative;border-right:2px solid var(--color-border-secondary)}
+.week-label.phase1{border-right-color:#D85A30}
+.week-label.phase2{border-right-color:#BA7517}
+.week-label.phase3{border-right-color:#1D9E75}
+.today-marker{position:absolute;right:-5px;top:50%;transform:translateY(-50%);width:8px;height:8px;border-radius:50%;background:#D85A30;z-index:10}
+.tasks{padding:8px 0 8px 14px;display:flex;flex-wrap:wrap;gap:6px;align-items:flex-start}
+.task{display:flex;align-items:center;gap:5px;font-size:12px;padding:3px 8px;border-radius:20px;border:0.5px solid transparent}
+.task.done{opacity:.5}
+.check{width:14px;height:14px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:9px;flex-shrink:0}
+.check.ok{background:#1D9E75;color:#fff}
+.check.todo{background:var(--color-background-secondary);border:0.5px solid var(--color-border-secondary)}
+.cat-rncp{background:#EEEDFE;border-color:#AFA9EC;color:#3C3489}
+.cat-stage{background:#E6F1FB;border-color:#85B7EB;color:#0C447C}
+.cat-portfolio{background:#EAF3DE;border-color:#97C459;color:#27500A}
+.cat-citizen{background:#FBEAF0;border-color:#ED93B1;color:#72243E}
+.cat-globe{background:#E1F5EE;border-color:#5DCAA5;color:#085041}
+.cat-sangoku{background:#FAECE7;border-color:#F0997B;color:#711B13}
+.cat-kata{background:#F1EFE8;border-color:#B4B2A9;color:#444441}
+.progress-row{display:flex;align-items:center;gap:8px;padding:2px 14px 6px;font-size:11px;color:var(--color-text-tertiary)}
+.bar{flex:1;height:4px;background:var(--color-background-secondary);border-radius:2px;overflow:hidden}
+.bar-fill{height:100%;border-radius:2px}
+.phase-label{font-size:12px;font-weight:500;padding:8px 0 4px;border-top-width:1.5px;border-top-style:solid;margin-top:8px}
+</style>
+
+<div class="wrap">
+
+<div style="display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap">
+  <div style="flex:1;min-width:110px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 14px">
+    <div style="font-size:11px;color:var(--color-text-secondary);margin-bottom:2px">Phase actuelle</div>
+    <div style="font-size:15px;font-weight:500;color:#D85A30">Phase 1 — Urgent</div>
+  </div>
+  <div style="flex:1;min-width:110px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 14px">
+    <div style="font-size:11px;color:var(--color-text-secondary);margin-bottom:2px">Objectif final</div>
+    <div style="font-size:15px;font-weight:500;color:#1D9E75">RNCP + Stage + Démo</div>
+  </div>
+  <div style="flex:1;min-width:110px;background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 14px">
+    <div style="font-size:11px;color:var(--color-text-secondary);margin-bottom:2px">Temps restant</div>
+    <div style="font-size:15px;font-weight:500">~6 semaines</div>
+  </div>
+</div>
+
+<div class="legend">
+  <span class="leg"><span class="dot" style="background:#3C3489"></span> RNCP</span>
+  <span class="leg"><span class="dot" style="background:#0C447C"></span> Stage</span>
+  <span class="leg"><span class="dot" style="background:#27500A"></span> Portfolio</span>
+  <span class="leg"><span class="dot" style="background:#72243E"></span> Citizen</span>
+  <span class="leg"><span class="dot" style="background:#085041"></span> Globe</span>
+  <span class="leg"><span class="dot" style="background:#711B13"></span> Sangoku</span>
+  <span class="leg"><span class="dot" style="background:#5F5E5A"></span> Katas</span>
+</div>
+
+<!-- Phase 1 -->
+<div class="phase-label" style="color:#D85A30;border-top-color:#D85A30;margin-top:0">PHASE 1 — URGENT</div>
+<div class="phases">
+  <div class="week">
+    <div class="week-label phase1">
+      <div class="today-marker"></div>
+      20–23 mar
+    </div>
+    <div><div class="tasks">
+      <span class="task cat-rncp done"><span class="check ok">✓</span>Liste livrables</span>
+      <span class="task cat-portfolio done"><span class="check ok">✓</span>Portfolio déployé</span>
+      <span class="task cat-stage done"><span class="check ok">✓</span>CV fait</span>
+      <span class="task cat-rncp"><span class="check todo"></span>Dossier écrit 80%</span>
+      <span class="task cat-stage"><span class="check todo"></span>10 candidatures</span>
+      <span class="task cat-citizen"><span class="check todo"></span>Tests + bugs Citizen</span>
+      <span class="task cat-sangoku"><span class="check todo"></span>Responsive + structure</span>
+      <span class="task cat-kata"><span class="check todo"></span>Katas JS / algo quotidiens</span>
+    </div></div>
+  </div>
+  <div class="week">
+    <div class="week-label phase1">24–30 mar</div>
+    <div><div class="tasks">
+      <span class="task cat-rncp"><span class="check todo"></span>Dossier 100%</span>
+      <span class="task cat-rncp"><span class="check todo"></span>Projet justifié UX+tech</span>
+      <span class="task cat-stage"><span class="check todo"></span>20–30 candidatures</span>
+      <span class="task cat-stage"><span class="check todo"></span>3 relances</span>
+      <span class="task cat-globe"><span class="check todo"></span>Build + déploiement Globe</span>
+      <span class="task cat-sangoku"><span class="check todo"></span>API + DB connectée</span>
+      <span class="task cat-portfolio"><span class="check todo"></span>Ajouter Globe au portfolio</span>
+      <span class="task cat-kata"><span class="check todo"></span>Katas CSS / composants</span>
+    </div></div>
+  </div>
+</div>
+
+<!-- Phase 2 -->
+<div class="phase-label" style="color:#BA7517;border-top-color:#BA7517">PHASE 2 — CONSOLIDATION</div>
+<div class="phases">
+  <div class="week">
+    <div class="week-label phase2">31 mar–6 avr</div>
+    <div><div class="tasks">
+      <span class="task cat-rncp"><span class="check todo"></span>Slides / support oral</span>
+      <span class="task cat-rncp"><span class="check todo"></span>Simulation orale</span>
+      <span class="task cat-citizen done"><span class="check ok">✓</span>Citizen démo propre</span>
+      <span class="task cat-portfolio"><span class="check todo"></span>Wireframes Citizen</span>
+      <span class="task cat-portfolio"><span class="check todo"></span>Wireframes Globe</span>
+      <span class="task cat-portfolio"><span class="check todo"></span>Wireframes Sangoku</span>
+      <span class="task cat-sangoku"><span class="check todo"></span>1–2 features déployées</span>
+      <span class="task cat-stage"><span class="check todo"></span>Suivi réponses</span>
+      <span class="task cat-kata"><span class="check todo"></span>Katas React / hooks</span>
+    </div></div>
+  </div>
+  <div class="week">
+    <div class="week-label phase2">7–13 avr</div>
+    <div><div class="tasks">
+      <span class="task cat-rncp"><span class="check todo"></span>Préparation orale finale</span>
+      <span class="task cat-stage"><span class="check todo"></span>Entretiens en cours</span>
+      <span class="task cat-globe"><span class="check todo"></span>Globe finalisé ✦ deadline</span>
+      <span class="task cat-sangoku"><span class="check todo"></span>Sangoku app utilisable</span>
+      <span class="task cat-portfolio"><span class="check todo"></span>Portfolio complet + wireframes</span>
+      <span class="task cat-kata"><span class="check todo"></span>Katas API / async</span>
+    </div></div>
+  </div>
+</div>
+
+<!-- Phase 3 -->
+<div class="phase-label" style="color:#1D9E75;border-top-color:#1D9E75">PHASE 3 — FINALISATION AVRIL</div>
+<div class="phases">
+  <div class="week">
+    <div class="week-label phase3">14–20 avr</div>
+    <div><div class="tasks">
+      <span class="task cat-rncp"><span class="check todo"></span>RNCP validé</span>
+      <span class="task cat-stage"><span class="check todo"></span>Entretiens / stage signé</span>
+      <span class="task cat-citizen"><span class="check todo"></span>Citizen — polish final</span>
+      <span class="task cat-globe done"><span class="check ok">✓</span>Globe stable (fait avant)</span>
+      <span class="task cat-kata"><span class="check todo"></span>Katas TypeScript / patterns</span>
+    </div></div>
+  </div>
+  <div class="week">
+    <div class="week-label phase3">21–30 avr</div>
+    <div><div class="tasks">
+      <span class="task cat-stage"><span class="check todo"></span>Stage confirmé</span>
+      <span class="task cat-sangoku"><span class="check todo"></span>Sangoku présentable</span>
+      <span class="task cat-citizen"><span class="check todo"></span>Citizen — version finale</span>
+      <span class="task cat-portfolio"><span class="check todo"></span>Portfolio final livré</span>
+      <span class="task cat-kata"><span class="check todo"></span>Katas tests / TDD</span>
+    </div></div>
+  </div>
+</div>
+
+<!-- Progress -->
+<div style="margin-top:20px;border-top:0.5px solid var(--color-border-tertiary);padding-top:14px">
+  <div style="font-size:11px;font-weight:500;color:var(--color-text-secondary);margin-bottom:8px">Avancement estimé</div>
+  <div class="progress-row">
+    <span style="min-width:72px;color:var(--color-text-secondary)">RNCP</span>
+    <div class="bar"><div class="bar-fill" style="width:15%;background:#3C3489"></div></div>
+    <span>15%</span>
+  </div>
+  <div class="progress-row">
+    <span style="min-width:72px;color:var(--color-text-secondary)">Stage</span>
+    <div class="bar"><div class="bar-fill" style="width:20%;background:#0C447C"></div></div>
+    <span>20%</span>
+  </div>
+  <div class="progress-row">
+    <span style="min-width:72px;color:var(--color-text-secondary)">Portfolio</span>
+    <div class="bar"><div class="bar-fill" style="width:80%;background:#27500A"></div></div>
+    <span>80%</span>
+  </div>
+  <div class="progress-row">
+    <span style="min-width:72px;color:var(--color-text-secondary)">Citizen</span>
+    <div class="bar"><div class="bar-fill" style="width:75%;background:#72243E"></div></div>
+    <span>75%</span>
+  </div>
+  <div class="progress-row">
+    <span style="min-width:72px;color:var(--color-text-secondary)">Globe</span>
+    <div class="bar"><div class="bar-fill" style="width:70%;background:#085041"></div></div>
+    <span>70%</span>
+  </div>
+  <div class="progress-row">
+    <span style="min-width:72px;color:var(--color-text-secondary)">Sangoku</span>
+    <div class="bar"><div class="bar-fill" style="width:10%;background:#711B13"></div></div>
+    <span>10%</span>
+  </div>
+  <div class="progress-row">
+    <span style="min-width:72px;color:var(--color-text-secondary)">Katas</span>
+    <div class="bar"><div class="bar-fill" style="width:0%;background:#5F5E5A"></div></div>
+    <span>0%</span>
+  </div>
+</div>
+
+</div>

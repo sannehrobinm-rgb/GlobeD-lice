@@ -2,16 +2,20 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import { neon } from "@neondatabase/serverless";
+import authRoutes from "./routes/auth.routes.js";
+import { authMiddleware } from "./middleware/auth.middleware.js";
 
 dotenv.config();
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use("/auth", authRoutes);
+
 const PORT = process.env.PORT || 4242;
 
 // ------------------------
-// GET : toutes les gourmandises
+// GET : toutes les gourmandises (public)
 // ------------------------
 app.get("/gourmandises", async (req, res) => {
   try {
@@ -26,9 +30,9 @@ app.get("/gourmandises", async (req, res) => {
 });
 
 // ------------------------
-// POST : ajouter une nouvelle pâtisserie
+// POST : ajouter une nouvelle pâtisserie (protégé)
 // ------------------------
-app.post("/gourmandises", async (req, res) => {
+app.post("/gourmandises", authMiddleware, async (req, res) => {
   try {
     const { nom, categorie, origine, image, historique, recette, adresse, adresse_lat, adresse_lng } = req.body;
     const sql = neon(process.env.DATABASE_URL);
@@ -46,9 +50,9 @@ app.post("/gourmandises", async (req, res) => {
 });
 
 // ------------------------
-// PUT : modifier une pâtisserie existante (avec adresse)
+// PUT : modifier une pâtisserie existante (protégé)
 // ------------------------
-app.put("/gourmandises/:id", async (req, res) => {
+app.put("/gourmandises/:id", authMiddleware, async (req, res) => {
   try {
     const { nom, origine, image, historique, recette, adresse, adresse_lat, adresse_lng } = req.body;
     const sql = neon(process.env.DATABASE_URL);
@@ -74,9 +78,9 @@ app.put("/gourmandises/:id", async (req, res) => {
 });
 
 // ------------------------
-// DELETE : supprimer une pâtisserie
+// DELETE : supprimer une pâtisserie (protégé)
 // ------------------------
-app.delete("/gourmandises/:id", async (req, res) => {
+app.delete("/gourmandises/:id", authMiddleware, async (req, res) => {
   try {
     const sql = neon(process.env.DATABASE_URL);
     await sql`DELETE FROM gourmandises WHERE id = ${req.params.id}`;
@@ -88,7 +92,7 @@ app.delete("/gourmandises/:id", async (req, res) => {
 });
 
 // ------------------------
-// GET : toutes les catégories custom
+// GET : toutes les catégories custom (public)
 // ------------------------
 app.get("/categories", async (req, res) => {
   try {
@@ -103,9 +107,9 @@ app.get("/categories", async (req, res) => {
 });
 
 // ------------------------
-// POST : ajouter une nouvelle catégorie
+// POST : ajouter une nouvelle catégorie (protégé)
 // ------------------------
-app.post("/categories", async (req, res) => {
+app.post("/categories", authMiddleware, async (req, res) => {
   try {
     const { nom } = req.body;
     const sql = neon(process.env.DATABASE_URL);

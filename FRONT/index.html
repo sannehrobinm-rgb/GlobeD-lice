@@ -3,58 +3,162 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gourmandises</title>
+  <title>Globe Délice</title>
+  <!-- Preconnect pour les ressources externes -->
+  <link rel="preload" href="public/images/logo2.png" as="image">
+  <link rel="preconnect" href="https://unpkg.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Fonts non-bloquantes : media=print puis all au chargement -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;500;600&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;500;600&display=swap"></noscript>
+  <!-- CSS en priorité -->
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
- <link href="https://fonts.googleapis.com/css2?family=Felipa&display=swap" rel="stylesheet">
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <link rel="preload" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"></noscript>
+
 </head>
 <body>
+
+  <div class="bg-glow" aria-hidden="true"></div>
+  <div class="grain"   aria-hidden="true"></div>
+  <div class="corner tl" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none"><path d="M5 55 L5 5 L55 5" stroke="#c9a227" stroke-width="0.9"/><circle cx="5" cy="5" r="1.8" fill="#c9a227"/></svg></div>
+  <div class="corner tr" aria-hidden="true"><svg viewBox="0 0 60 60" fill="none"><path d="M5 55 L5 5 L55 5" stroke="#c9a227" stroke-width="0.9"/><circle cx="5" cy="5" r="1.8" fill="#c9a227"/></svg></div>
+
   <!-- HEADER -->
-<header class="site-header">
-  <!-- Logo -->
-  <div class="logo-container">
-    <a href="/">
-      <img src="public/images/logo2.png" alt="Logo Gourmandise" class="logo">
-    </a>
-  </div>
+  <header class="site-header" role="banner">
 
-  <!-- Citation -->
-  <div class="container-citation">
-    <h2>"Le seul moyen de se délivrer d'une tentation, c'est d'y céder."</h2>
-  </div>
-</header>
+    <button class="hamburger" id="hamburger"
+            aria-label="Ouvrir le menu"
+            aria-expanded="false"
+            aria-controls="nav-menu">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </button>
 
-<!-- <container-logo><img src="public/images/logo2.png" alt="Logo de mon site"></container-logo> -->
-  
-<!-- BARRE DE RECHERCHE -->
-  <div class="search-container">
-    <input type="text" id="search" placeholder="Rechercher une pâtisserie...">
-   <!--  <select id="categorie" required>
-      <option value="patisseries-française">Pâtisseries françaises</option>
-      <option value="patisseries_europeennes">Pâtisseries européennes</option>
-      <option value="patisseries_americaines">Pâtisseries américaines</option>
-    </select> -->
-  </div>
+    <nav class="nav-menu" id="nav-menu" role="navigation" aria-label="Menu principal">
+      <div id="auth-buttons"></div>
+    </nav>
 
-  <!-- CONTENEUR PRINCIPAL -->
-  <div class="main-container">
-
-    <!-- GAUCHE : colonnes pâtisseries -->
-    <div id="cards-container"></div>
-
-    <!-- MILIEU : slider + carte cliquée -->
-    <div id="search-results"></div>
-
-    <!-- DROITE : carte Leaflet -->
-    <div id="map-column">
-      <h2 class="map-title">🗺️ La meilleure adresse du monde</h2>
-      <div id="map"></div>
+    <!-- Logo avec scintillement -->
+    <div class="header-logo-wrap">
+      <a href="welcome.html" aria-label="Globe Délice — Accueil">
+        <img src="public/images/logo2.png" alt="Globe Délice" class="header-logo">
+      </a>
     </div>
 
+    <!-- Barre de recherche -->
+    <div class="header-search">
+      <label for="search" class="sr-only">Rechercher une pâtisserie</label>
+      <input type="search" id="search"
+             placeholder="Rechercher une pâtisserie…"
+             autocomplete="off">
+    </div>
+
+  </header>
+
+  <!-- LAYOUT PRINCIPAL -->
+  <div class="app-layout">
+
+    <aside class="col-cats" aria-label="Catégories">
+      <div id="cards-container"></div>
+    </aside>
+
+    <section class="col-mid" aria-label="Résultats">
+      <div id="search-results" aria-live="polite"></div>
+    </section>
+
+    <section class="col-map" aria-label="Carte">
+      <h2 class="map-title">La meilleure adresse du monde</h2>
+      <div id="map" role="application" aria-label="Carte des pâtisseries"></div>
+    </section>
+
+    <aside class="col-favs" aria-label="Favoris">
+      <div id="favori-results"></div>
+    </aside>
+
   </div>
 
-  <!-- SCRIPT JS -->
+  <button class="back-to-top" id="back-to-top" aria-label="Retour en haut">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M18 15l-6-6-6 6"/></svg>
+  </button>
+
+  <script>
+    if (new URLSearchParams(window.location.search).get("transition")) {
+      document.body.style.cssText = "opacity:0;transform:scale(4);transform-origin:center center;transition:none;";
+      window.addEventListener("load", () => {
+        setTimeout(() => {
+          document.body.style.transition = "transform 1.2s cubic-bezier(0.25,0.46,0.45,0.94), opacity 0.8s ease";
+          document.body.style.transform  = "scale(1)";
+          document.body.style.opacity    = "1";
+        }, 50);
+      });
+    }
+
+    for (let i = 0; i < 14; i++) {
+      const p = document.createElement("div");
+      p.className = "particle";
+      p.setAttribute("aria-hidden", "true");
+      const s = Math.random() * 2.5 + 1.2;
+      p.style.cssText = `left:${Math.random()*100}vw;width:${s}px;height:${s}px;animation-duration:${Math.random()*12+10}s;animation-delay:${Math.random()*12}s;`;
+      document.body.appendChild(p);
+    }
+
+    const token  = localStorage.getItem("token");
+    const user   = JSON.parse(localStorage.getItem("user") || "null");
+    const authDiv = document.getElementById("auth-buttons");
+
+    if (token && user) {
+      authDiv.innerHTML = `
+        <span class="nav-user">${user.email}</span>
+        <a href="favoris.html" class="nav-btn">Mes favoris</a>
+        <button type="button" class="nav-btn" onclick="logout()">Déconnexion</button>
+      `;
+    } else {
+      authDiv.innerHTML = `
+        <a href="login.html"    class="nav-btn">Connexion</a>
+        <a href="register.html" class="nav-btn">Inscription</a>
+      `;
+    }
+
+    function logout() {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      window.location.reload();
+    }
+
+    const hamburger = document.getElementById("hamburger");
+    const navMenu   = document.getElementById("nav-menu");
+
+    hamburger.addEventListener("click", () => {
+      const open = navMenu.classList.toggle("open");
+      hamburger.setAttribute("aria-expanded", open);
+      hamburger.setAttribute("aria-label", open ? "Fermer le menu" : "Ouvrir le menu");
+    });
+
+    document.addEventListener("click", (e) => {
+      if (!navMenu.contains(e.target) && !hamburger.contains(e.target)) {
+        navMenu.classList.remove("open");
+        hamburger.setAttribute("aria-expanded", "false");
+        hamburger.setAttribute("aria-label", "Ouvrir le menu");
+      }
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && navMenu.classList.contains("open")) {
+        navMenu.classList.remove("open");
+        hamburger.setAttribute("aria-expanded", "false");
+        hamburger.focus();
+      }
+    });
+
+    const backBtn = document.getElementById("back-to-top");
+    window.addEventListener("scroll", () => backBtn.classList.toggle("visible", window.scrollY > 300));
+    backBtn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+  </script>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Connexion - Gourmandise</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="auth-container">
+    <h1>Connexion</h1>
+    <form id="loginForm">
+      <input type="email" id="email" placeholder="Email" required />
+      <input type="password" id="password" placeholder="Mot de passe" required />
+      <button type="submit">Se connecter</button>
+    </form>
+    <p id="message"></p>
+    <p><a href="forgot-password.html">Mot de passe oublié ?</a></p>
+    <p>Pas de compte ? <a href="register.html">S'inscrire</a></p>
+  </div>
+
+  <script>
+    // Si déjà connecté → pas besoin d'être ici
+    if (localStorage.getItem('token')) {
+      window.location.href = 'index.html';
+    }
+
+    const API = "http://localhost:4242";
+
+    document.getElementById("loginForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      const res = await fetch(`${API}/auth/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await res.json();
+      const msg = document.getElementById("message");
+
+      if (res.ok) {
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("user", JSON.stringify(data.user));
+        msg.style.color = "green";
+        msg.textContent = "Connexion réussie ! Redirection...";
+        setTimeout(() => window.location.href = "index.html", 1000);
+      } else {
+        msg.style.color = "red";
+        msg.textContent = data.message;
+      }
+    });
+  </script>
+</body>
+</html>

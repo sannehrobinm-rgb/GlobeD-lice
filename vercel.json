@@ -1,0 +1,35 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "BACK/api/index.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "FRONT/**",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "BACK/api/index.js"
+    },
+    {
+      "src": "/auth/(.*)",
+      "dest": "BACK/api/index.js"
+    },
+    {
+      "src": "/gourmandises(.*)",
+      "dest": "BACK/api/index.js"
+    },
+    {
+      "src": "/categories(.*)",
+      "dest": "BACK/api/index.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "FRONT/$1"
+    }
+  ]
+}
