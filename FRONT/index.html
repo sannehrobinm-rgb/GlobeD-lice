@@ -112,7 +112,7 @@
     if (token && user) {
       authDiv.innerHTML = `
         <span class="nav-user">${user.email}</span>
-        <a href="favoris.html" class="nav-btn">Mes favoris</a>
+        <button class="nav-btn" onclick="openFavDrawer()">Mes favoris</button>
         <button type="button" class="nav-btn" onclick="logout()">Déconnexion</button>
       `;
     } else {
