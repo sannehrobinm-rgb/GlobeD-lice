@@ -279,11 +279,11 @@ body {
 }
 
 .nav-btn {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 44px;
-  padding: 8px 12px;
+  min-height: 36px;
+  padding: 6px 14px;
   background: linear-gradient(135deg, rgba(201,162,39,0.12), rgba(72,51,3,0.25));
   color: var(--cream);
   border: 1px solid var(--border);
@@ -295,6 +295,7 @@ body {
   text-decoration: none;
   transition: background 0.2s, border-color 0.2s, transform 0.15s;
   text-align: center;
+  width: auto;
 }
 
 .nav-btn:hover, .nav-btn:focus {
