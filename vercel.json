@@ -11,6 +11,10 @@
     }
   ],
   "routes": [
+      {
+      "src": "/",
+      "dest": "FRONT/welcome.html"
+    },
     {
       "src": "/api/(.*)",
       "dest": "BACK/api/index.js"
