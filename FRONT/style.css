@@ -172,7 +172,7 @@ body {
 
 /* Barre de recherche dans le header */
 .header-search {
-  flex: 0 0 auto;
+  flex: 1;
   height: calc(var(--panel-h) * 2 + var(--panel-gap));
   max-width: 380px;
   margin: 0 auto;
@@ -463,7 +463,7 @@ body {
    COLONNE CARTE
 ======================================================= */
 .col-map {
-  flex: 0 0 auto;
+  flex: 1;
   height: calc(var(--panel-h) * 2 + var(--panel-gap));
   min-width: 0;
   border-right: 1px solid var(--border);
@@ -493,7 +493,7 @@ body {
 }
 
 #map {
-  flex: 0 0 auto;
+  flex: 1;
   height: calc(var(--panel-h) * 2 + var(--panel-gap));
   min-height: 0;
   border-radius: 20px;
@@ -1006,7 +1006,7 @@ body {
 
 /* Contenu scrollable */
 .drawer-content {
-  flex: 0 0 auto;
+  flex: 1;
   height: calc(var(--panel-h) * 2 + var(--panel-gap));
   overflow-y: auto;
   padding: 16px;
