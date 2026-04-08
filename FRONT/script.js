@@ -8,6 +8,39 @@ const searchInput = document.getElementById("search");
 let gourmandises = [];
 
 // -------------------------------
+// DONNÉES DÉMO  ← AJOUT
+// -------------------------------
+const DEMO_DATA = [
+  { id: "d1", nom: "Croissant", origine: "Paris, France", categorie: "patisseries-française",
+    image: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=400",
+    historique: "Le croissant est né à Vienne au XVIIe siècle et adopté par la France au XIXe.",
+    recette: "https://www.marmiton.org/recettes/recette_croissants_23614.aspx",
+    adresse_lat: 48.8566, adresse_lng: 2.3522 },
+  { id: "d2", nom: "Éclair au chocolat", origine: "Lyon, France", categorie: "patisseries-française",
+    image: "https://images.unsplash.com/photo-1603532648955-039310d9ed75?w=400",
+    historique: "Inventé par Marie-Antoine Carême, pâtissier du XIXe siècle.",
+    adresse_lat: 45.7640, adresse_lng: 4.8357 },
+  { id: "d3", nom: "Tiramisu", origine: "Venise, Italie", categorie: "patisseries_europeennes",
+    image: "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=400",
+    historique: "Dessert emblématique du nord de l'Italie, apparu dans les années 1960.",
+    adresse_lat: 45.4408, adresse_lng: 12.3155 },
+  { id: "d4", nom: "Cheesecake", origine: "New York, USA", categorie: "patisseries_americaines",
+    image: "https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=400",
+    historique: "Le cheesecake new-yorkais est devenu une icône de la pâtisserie américaine.",
+    adresse_lat: 40.7128, adresse_lng: -74.0060 }
+];
+
+const renderDemoBanner = () => {
+  const isDemo = localStorage.getItem("demo_mode");
+  if (!isDemo) return;
+  const banner = document.createElement("div");
+  banner.id = "demo-banner";
+  banner.style.cssText = "position:fixed;top:0;left:0;width:100%;background:#c9a227;color:#08040f;padding:6px;text-align:center;font-size:0.8rem;letter-spacing:0.05em;z-index:101;height:32px;line-height:20px;";
+  banner.innerHTML = `Mode démo — données fictives &nbsp;|&nbsp; <a href="login.html" onclick="localStorage.clear()" style="font-weight:bold;color:#08040f;">Se connecter</a> &nbsp;|&nbsp; <a href="register.html" style="font-weight:bold;color:#08040f;">Créer un compte</a>`;
+  document.body.prepend(banner);
+};
+
+// -------------------------------
 // AUTH HELPERS
 // -------------------------------
 // En production sur Vercel, l'API est sur le même domaine
@@ -18,11 +51,13 @@ const API = window.location.hostname === 'localhost' || window.location.hostname
 
 const authHeaders = () => {
   const token = localStorage.getItem("token");
+  const isDemo = localStorage.getItem("demo_mode");
   return {
     "Content-Type": "application/json",
-    ...(token ? { "Authorization": `Bearer ${token}` } : {})
+    ...(token && !isDemo ? { "Authorization": `Bearer ${token}` } : {})
   };
 };
+
 
 const handleAuthError = (status) => {
   if (status === 401 || status === 403) {
@@ -43,10 +78,10 @@ const renderAuthNav = () => {
   if (!nav) {
     nav = document.createElement("div");
     nav.id = "auth-nav";
-    nav.style.cssText = "position:fixed;top:14px;right:18px;z-index:9999;";
+   nav.style.cssText ="position:fixed;top:14px;right:18px;z-index:9999;";
     document.body.appendChild(nav);
   }
-  if (isLoggedIn()) {
+if (isLoggedIn()) {
     const user = JSON.parse(localStorage.getItem("user") || "{}");
     nav.innerHTML = `
       <span style="color:rgba(221,170,32,0.5);font-size:0.75rem;font-family:sans-serif;letter-spacing:0.04em;">${user.email || ""}</span>
@@ -60,6 +95,7 @@ const renderAuthNav = () => {
     document.getElementById("logout-btn").addEventListener("click", () => {
       localStorage.removeItem("token");
       localStorage.removeItem("user");
+      localStorage.removeItem("demo_mode"); // ← AJOUT : nettoie aussi le mode démo
       window.location.reload();
     });
     updateFavBadge();
@@ -285,7 +321,7 @@ const createCard = (g) => {
   card.appendChild(formEdit);
 
   // BOUTON SUPPRIMER
-  if (g.id && isLoggedIn()) {
+  if (g.id && isLoggedIn() && !localStorage.getItem("demo_mode")) {
     const deleteBtn = document.createElement("button");
     deleteBtn.textContent = "🗑️ Supprimer";
     deleteBtn.className = "delete-btn";
@@ -901,6 +937,17 @@ const fetchGourmandises = async () => {
     // Lancer la carte immédiatement sans attendre les données
     initMap();
     renderAuthNav();
+renderDemoBanner();
+
+const isDemo = localStorage.getItem("demo_mode");
+if (isDemo) {
+  gourmandises = DEMO_DATA;
+  displayColumns(gourmandises);
+  appendAddCategoryBtn();
+  startSlider();
+  refreshMarkers();
+  return;
+}
 
     // Requêtes catégories + pâtisseries en parallèle
     const [resCat, res] = await Promise.all([

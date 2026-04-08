@@ -319,7 +319,8 @@
 
     <nav class="welcome-btns" aria-label="Actions principales">
       <a href="register.html" class="btn-secondary">Inscription</a>
-      <button class="btn-primary" onclick="startTransition()">Explorer</button>
+      <!-- <button class="btn-primary" onclick="startTransition()">Explorer</button> -->
+      <button class="btn-primary" onclick="startDemo()">Explorer</button>
       <a href="login.html"    class="btn-secondary">Connexion</a>
     </nav>
   </main>
@@ -327,6 +328,12 @@
   <p class="discover-hint" aria-hidden="true">✦ &nbsp; Pâtisseries du monde entier &nbsp; ✦</p>
 
   <script>
+    function startDemo() {
+  localStorage.setItem("demo_mode", "true");
+  localStorage.setItem("token", "demo-token");
+  localStorage.setItem("user", JSON.stringify({ id: "demo", email: "demo@globedelice.fr", isDemo: true }));
+  startTransition(); // réutilise ton animation existante
+}
     // Particules flottantes
     for (let i = 0; i < 18; i++) {
       const p = document.createElement("div");

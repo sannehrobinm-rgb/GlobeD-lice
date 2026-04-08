@@ -120,6 +120,13 @@ body {
 /* =======================================================
    HEADER — compact, horizontal, hauteur fixe
 ======================================================= */
+body:has(#demo-banner) .site-header {
+  top: 32px;
+}
+
+body:has(#demo-banner) .app-layout {
+  top: calc(68px + 32px);
+}
 .site-header {
   position: fixed;
   top: 0; left: 0; right: 0;

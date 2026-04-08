@@ -16,6 +16,11 @@
     <p id="message"></p>
     <p><a href="forgot-password.html">Mot de passe oublié ?</a></p>
     <p>Pas de compte ? <a href="register.html">S'inscrire</a></p>
+    <div style="text-align:center; margin-top: 16px;">
+  <button id="demo-btn" type="button" style="background:transparent; border:1px solid rgba(201,162,39,0.5); color:#c9a227; padding:10px 24px; cursor:pointer; border-radius:20px; font-size:0.85rem; letter-spacing:0.08em;">
+   Explorer en démo
+  </button>
+</div>
   </div>
 
   <script>
@@ -50,6 +55,15 @@
         msg.style.color = "red";
         msg.textContent = data.message;
       }
+    });
+    document.getElementById("demo-btn").addEventListener("click", () => {
+      localStorage.setItem("demo_mode", "true");
+      localStorage.setItem("token", "demo-token");
+      localStorage.setItem("user", JSON.stringify({
+        id: "demo",
+        email: "demo@globedelice.fr",
+        isDemo: true
+      }));    window.location.href = "index.html";
     });
   </script>
 </body>
